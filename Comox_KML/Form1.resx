@@ -57,4 +57,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox3.Text" xml:space="preserve">
+    <value>&lt;Style id ="file: ПСП"&gt;
+&lt;IconStyle &gt;
+&lt;Icon &gt;
+&lt;href &gt; files /file - ПСП.zip - grn - pushpin.webp &lt;/href &gt;
+&lt;/Icon &gt;
+&lt;hotSpot x = "0.5" y = "0" xunits = "fraction" yunits = "fraction" /&gt;
+&lt;/IconStyle &gt;
+&lt;/Style &gt;</value>
+  </data>
 </root>
