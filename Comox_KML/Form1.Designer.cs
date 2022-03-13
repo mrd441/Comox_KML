@@ -42,6 +42,9 @@ namespace Comox_KML
             this.elNameToInjAfter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
+            this.labelFileCount = new System.Windows.Forms.Label();
+            this.labelDone = new System.Windows.Forms.Label();
+            this.labelError = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -53,7 +56,7 @@ namespace Comox_KML
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Старт";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -172,19 +175,52 @@ namespace Comox_KML
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(175, 13);
+            this.button3.Location = new System.Drawing.Point(99, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 9;
-            this.button3.Text = "button3";
+            this.button3.Text = "Стоп";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // labelFileCount
+            // 
+            this.labelFileCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelFileCount.AutoSize = true;
+            this.labelFileCount.Location = new System.Drawing.Point(521, 16);
+            this.labelFileCount.Name = "labelFileCount";
+            this.labelFileCount.Size = new System.Drawing.Size(116, 15);
+            this.labelFileCount.TabIndex = 11;
+            this.labelFileCount.Text = "Всего файлов 50000";
+            // 
+            // labelDone
+            // 
+            this.labelDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDone.AutoSize = true;
+            this.labelDone.Location = new System.Drawing.Point(643, 16);
+            this.labelDone.Name = "labelDone";
+            this.labelDone.Size = new System.Drawing.Size(116, 15);
+            this.labelDone.TabIndex = 12;
+            this.labelDone.Text = "Обработано - 50000";
+            // 
+            // labelError
+            // 
+            this.labelError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelError.AutoSize = true;
+            this.labelError.Location = new System.Drawing.Point(762, 16);
+            this.labelError.Name = "labelError";
+            this.labelError.Size = new System.Drawing.Size(95, 15);
+            this.labelError.TabIndex = 13;
+            this.labelError.Text = "Ошибок - 50000";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(869, 484);
+            this.Controls.Add(this.labelError);
+            this.Controls.Add(this.labelDone);
+            this.Controls.Add(this.labelFileCount);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -197,6 +233,7 @@ namespace Comox_KML
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -214,6 +251,9 @@ namespace Comox_KML
         private System.Windows.Forms.TextBox elNameToInjAfter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label labelFileCount;
+        private System.Windows.Forms.Label labelDone;
+        private System.Windows.Forms.Label labelError;
     }
 }
 

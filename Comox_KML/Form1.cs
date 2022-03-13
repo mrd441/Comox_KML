@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -10,10 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using System.Collections.Concurrent;
-
 using System.IO;
-using System.Diagnostics;
 
 namespace Comox_KML
 {
@@ -24,61 +20,90 @@ namespace Comox_KML
         public string[] excStyleList;
         public string elNameToInjAfterT;
         public CancellationTokenSource tokenSource ;
+        public int done;
+        public int error;
 
         public Form1()
         {
             InitializeComponent();
             toInjRes = false;
-        }        
+        }  
 
-        private void processFile(string filePath)
+        public void updateDoneLable(int value = 0)
+        {
+            done = done + value;
+            labelDone.Invoke(new MethodInvoker(() => labelDone.Text = $"Обработано - {done}"));
+        }
+        public void updateErorLable(int value = 0 )
+        {
+            error = error + value;
+            labelError.Invoke(new MethodInvoker(() => labelError.Text = $"Ошибок - {error}"));
+        }
+
+
+        private void processFile(FileInfo filePath)
         {
             //loging(Task.CurrentId.ToString());
             //loging("1");
-            XDocument xml = XDocument.Load(filePath, LoadOptions.SetBaseUri);
-            
-            XNamespace ns = "http://www.opengis.net/kml/2.2";
-            foreach (XAttribute xA in xml.Root.Attributes())
+            try
             {
-                if (xA.Name == "xmlns")
+                XDocument xml = XDocument.Load(filePath.FullName);
+
+                XNamespace ns = "http://www.opengis.net/kml/2.2";
+                foreach (XAttribute xA in xml.Root.Attributes())
                 {
-                    ns = xA.Value;
-                    XAttribute foo = xA;
-                    xA.Remove();
-                    xml.Root.Add(foo);
-                    break;
+                    if (xA.Name == "xmlns")
+                    {
+                        ns = xA.Value;
+                        XAttribute foo = xA;
+                        xA.Remove();
+                        xml.Root.Add(foo);
+                        break;
+                    }
                 }
-            }
 
-            xml.Descendants(ns + "Style")
-            .Where(x => !excStyleList.Contains((string)x.Attribute("id")))
-            .Remove();
-                        
-            if (toInjRes)
-            {
-                foreach (XElement el in xml.Descendants(ns + elNameToInjAfterT))
+                xml.Descendants(ns + "Style")
+                .Where(x => !excStyleList.Contains((string)x.Attribute("id")))
+                .Remove();
+
+                if (toInjRes)
                 {
-                    el.AddAfterSelf(xmlFrag);
+                    foreach (XElement el in xml.Descendants(ns + elNameToInjAfterT))
+                    {
+                        el.AddAfterSelf(xmlFrag);
+                    }
                 }
+                //xml.Descendants(ns + "name").First().AddAfterSelf(xmlTree);
+
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = ("\t");
+                settings.OmitXmlDeclaration = false;
+                settings.Encoding = new UTF8Encoding(false);
+                settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+
+                string destName = filePath.DirectoryName + "\\done\\" + filePath.Name;
+                using (XmlWriter w = XmlWriter.Create(destName, settings))
+                {
+                    xml.Save(w);
+                }                
+                updateDoneLable(1);
             }
-            //xml.Descendants(ns + "name").First().AddAfterSelf(xmlTree);
-
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = ("\t");
-            settings.OmitXmlDeclaration = false;
-            settings.Encoding = new UTF8Encoding(false);
-            settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
-
-            using (XmlWriter w = XmlWriter.Create(filePath + "1", settings))
-            {
-                xml.Save(w);
+            catch(Exception ex)
+            {                
+                loging($"Ошибка обработки {filePath.Name}. {ex.Message}",2);
+                updateErorLable(1);
+                string destName = filePath.DirectoryName + "\\error\\" + filePath.Name;
+                File.Move(filePath.FullName, destName);
             }
 
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            
+            button1.Enabled = false;
+            richTextBox1.Clear();
             elNameToInjAfterT = elNameToInjAfter.Text;
             //elNameToInjAfter.Invoke(new MethodInvoker(() => elNameToInjAfterT = elNameToInjAfter.Text));
             excStyleList = richTextBox2.Lines;
@@ -91,9 +116,9 @@ namespace Comox_KML
             }
 
             if (toInjRes && !checkXmlFrag())
-                return;  
+                return;
 
-            //var filePath = string.Empty;
+            var filePath = string.Empty;
             //using (OpenFileDialog openFileDialog = new OpenFileDialog())
             //{
             //    openFileDialog.Filter = "txt files (*.kml)|*.kml|All files (*.*)|*.*";
@@ -105,12 +130,36 @@ namespace Comox_KML
             //}
             //if (filePath == string.Empty) return;
 
+            using (FolderBrowserDialog openFileDialog = new FolderBrowserDialog())
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    filePath = openFileDialog.SelectedPath;
+            }
+            if (filePath == string.Empty) return;
+
             //await Task.Run(() => processFile(filePath));
 
             loging("Подсчет фалов...");
-            DirectoryInfo d = new DirectoryInfo(@"C:\Users\akim\Downloads\Новая папка"); //Assuming Test is your Folder
+            DirectoryInfo d = new DirectoryInfo(filePath); //Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.kml");
             loging("Всего файлов - " + Files.Count().ToString());
+
+            if (Files==null || Files.Length==0)
+            {
+                loging("Завершено.");
+                return;
+            }
+
+            Directory.CreateDirectory(filePath + "\\done");
+            Directory.CreateDirectory(filePath + "\\error");
+            done = 0;
+            error = 0;
+            labelFileCount.Text = $"Всего файлов {Files.Count()}";
+            updateErorLable();
+            updateDoneLable();
+            labelFileCount.Visible = true;
+            labelDone.Visible = true;
+            labelError.Visible = true;
 
             tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
@@ -119,18 +168,19 @@ namespace Comox_KML
             loging("Начало.");
             foreach (var file in Files)
                 //tasks.Add(factory.StartNew(() => p2(file.FullName), token, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default));
-                tasks.Add(Task.Run(() => p2(file.FullName), token));
-
+                tasks.Add(Task.Run(() => processFile(file), token));
+            
             try
             {
                 await Task.WhenAll(tasks.ToArray());
             }
             catch (OperationCanceledException)
             {
-                loging("Остановлено по причине " + nameof(OperationCanceledException));
+                //loging("Операция прервана по причине " + nameof(OperationCanceledException));
             }
             finally
             {
+                button1.Enabled = true;
                 tokenSource.Dispose();
             }
             
@@ -186,8 +236,12 @@ namespace Comox_KML
 
         private void button3_Click(object sender, EventArgs e)
         {
-            loging("Завершение...");
-            tokenSource.Cancel();
+            try
+            {
+                tokenSource.Cancel();
+                loging("Операция прервана...");
+            }
+            catch (Exception) { }
         }
     }
 }
