@@ -88,7 +88,8 @@ namespace Comox_KML
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(273, 167);
             this.richTextBox2.TabIndex = 3;
-            this.richTextBox2.Text = "file:ПСП.zip:grn-pushpin.webp1\nfile:ПСП.zip:grn-pushpin.webp2";
+            this.richTextBox2.Text = "sh_grn-pushpin \nmsn_grn-pushpin \npushpin_hl \ns_ylw-pushpin_hl \ns_ylw-pushpin \nm_y" +
+    "lw-pushpin";
             // 
             // richTextBox3
             // 

@@ -58,13 +58,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBox3.Text" xml:space="preserve">
-    <value>&lt;Style id ="file: ПСП"&gt;
-&lt;IconStyle &gt;
-&lt;Icon &gt;
-&lt;href &gt; files /file - ПСП.zip - grn - pushpin.webp &lt;/href &gt;
-&lt;/Icon &gt;
-&lt;hotSpot x = "0.5" y = "0" xunits = "fraction" yunits = "fraction" /&gt;
-&lt;/IconStyle &gt;
-&lt;/Style &gt;</value>
+    <value>&lt;Style id="file:ПСП.zip:caution.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-caution.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;
+	&lt;Style id="file:ПСП.zip:flag.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-flag.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;
+	&lt;Style id="file:ПСП.zip:grn-pushpin.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-grn-pushpin.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;
+	&lt;Style id="file:ПСП.zip:ancientmonum.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-ancientmonum.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;
+	&lt;Style id="file:ПСП.zip:accident.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-accident.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;
+	&lt;Style id="file:ПСП.zip:parking.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-parking.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;
+	&lt;Style id="file:ПСП.zip:ranger_station.webp"&gt;
+		&lt;IconStyle&gt;
+			&lt;Icon&gt;&lt;href&gt;files/file-ПСП.zip-ranger_station.webp&lt;/href&gt;&lt;/Icon&gt;
+			&lt;hotSpot x="0.5" y="0.0" xunits="fraction" yunits="fraction" /&gt;
+		&lt;/IconStyle&gt;
+	&lt;/Style&gt;</value>
   </data>
 </root>

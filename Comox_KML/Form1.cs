@@ -17,7 +17,7 @@ namespace Comox_KML
     {
         public XElement xmlFrag;
         public bool toInjRes;
-        public string[] excStyleList;
+        public List<string> excStyleList;
         public string elNameToInjAfterT;
         public CancellationTokenSource tokenSource ;
         public int done;
@@ -66,14 +66,14 @@ namespace Comox_KML
                 .Where(x => !excStyleList.Contains((string)x.Attribute("id")))
                 .Remove();
 
-                if (toInjRes)
-                {
-                    foreach (XElement el in xml.Descendants(ns + elNameToInjAfterT))
-                    {
-                        el.AddAfterSelf(xmlFrag);
-                    }
-                }
-                //xml.Descendants(ns + "name").First().AddAfterSelf(xmlTree);
+                //if (toInjRes)
+                //{
+                //    foreach (XElement el in xml.Descendants(ns + elNameToInjAfterT))
+                //    {
+                //        el.AddAfterSelf(xmlFrag);
+                //    }
+                //}
+                xml.Descendants(ns + elNameToInjAfterT).First().AddAfterSelf(xmlFrag.Elements());
 
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
@@ -106,7 +106,11 @@ namespace Comox_KML
             richTextBox1.Clear();
             elNameToInjAfterT = elNameToInjAfter.Text;
             //elNameToInjAfter.Invoke(new MethodInvoker(() => elNameToInjAfterT = elNameToInjAfter.Text));
-            excStyleList = richTextBox2.Lines;
+            excStyleList = new List<string>();
+           
+            foreach(string line in richTextBox2.Lines)
+                excStyleList.Add("file:ПСП.zip:" + line.Trim() + ".webp");
+
             toInjRes = injFrag.Checked;
 
             if (toInjRes && elNameToInjAfterT=="")
@@ -202,6 +206,7 @@ namespace Comox_KML
 
             try
             {
+                fragT = "<rootadditional>" + fragT + "</rootadditional>";
                 xmlFrag = XElement.Parse(fragT);
             }
             catch (Exception ex)
