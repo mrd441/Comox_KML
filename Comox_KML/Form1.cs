@@ -62,9 +62,14 @@ namespace Comox_KML
                     }
                 }
 
-                xml.Descendants(ns + "Style")
-                .Where(x => !excStyleList.Contains((string)x.Attribute("id")))
+                xml.Descendants()
+                .Where(x => ((string)x.Name.LocalName== "Style" || (string)x.Name.LocalName == "StyleMap") && (!compareStyleId((string)x.Attribute("id"))))
                 .Remove();
+                //xml.Descendants(ns + "Style").Where(x => !compareStyleId((string)x.Attribute("id")))
+                //.Remove();
+                //xml.Descendants(ns + "StyleMap")
+                //.Where(x => !compareStyleId((string)x.Attribute("id")))
+                //.Remove();
 
                 //if (toInjRes)
                 //{
@@ -73,17 +78,18 @@ namespace Comox_KML
                 //        el.AddAfterSelf(xmlFrag);
                 //    }
                 //}
-                xml.Descendants(ns + elNameToInjAfterT).First().AddAfterSelf(xmlFrag.Elements());
+                if (toInjRes)
+                    xml.Descendants(ns + elNameToInjAfterT).First().AddAfterSelf(xmlFrag.Elements());
 
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
                 settings.IndentChars = ("\t");
                 settings.OmitXmlDeclaration = false;
                 settings.Encoding = new UTF8Encoding(false);
-                settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;
+                settings.NamespaceHandling = NamespaceHandling.OmitDuplicates;               
 
-                string destName = filePath.DirectoryName + "\\done\\" + filePath.Name;
-                using (XmlWriter w = XmlWriter.Create(destName, settings))
+                //string destName = filePath.DirectoryName + "\\done\\" + filePath.Name;
+                using (XmlWriter w = XmlWriter.Create(filePath.FullName, settings))
                 {
                     xml.Save(w);
                 }                
@@ -93,10 +99,16 @@ namespace Comox_KML
             {                
                 loging($"Ошибка обработки {filePath.Name}. {ex.Message}",2);
                 updateErorLable(1);
-                string destName = filePath.DirectoryName + "\\error\\" + filePath.Name;
-                File.Move(filePath.FullName, destName);
+                //string destName = filePath.DirectoryName + "\\error\\" + filePath.Name;
+                //File.Move(filePath.FullName, destName);
             }
 
+        }
+
+        public bool compareStyleId(string idName)
+        {
+            idName = idName.Split(":").Last().Replace(".webp", "");
+            return excStyleList.Contains(idName);
         }
 
         private async void button1_Click(object sender, EventArgs e)
@@ -109,7 +121,8 @@ namespace Comox_KML
             excStyleList = new List<string>();
            
             foreach(string line in richTextBox2.Lines)
-                excStyleList.Add("file:ПСП.zip:" + line.Trim() + ".webp");
+                excStyleList.Add(line.Trim());
+            //excStyleList.Add("file:ПСП.zip:" + line.Trim() + ".webp");
 
             toInjRes = injFrag.Checked;
 
@@ -145,7 +158,7 @@ namespace Comox_KML
 
             loging("Подсчет фалов...");
             DirectoryInfo d = new DirectoryInfo(filePath); //Assuming Test is your Folder
-            FileInfo[] Files = d.GetFiles("*.kml");
+            FileInfo[] Files = d.GetFiles("*.kml",SearchOption.AllDirectories);
             loging("Всего файлов - " + Files.Count().ToString());
 
             if (Files==null || Files.Length==0)
@@ -154,8 +167,8 @@ namespace Comox_KML
                 return;
             }
 
-            Directory.CreateDirectory(filePath + "\\done");
-            Directory.CreateDirectory(filePath + "\\error");
+            //Directory.CreateDirectory(filePath + "\\done");
+            //Directory.CreateDirectory(filePath + "\\error");
             done = 0;
             error = 0;
             labelFileCount.Text = $"Всего файлов {Files.Count()}";
