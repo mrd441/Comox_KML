@@ -108,7 +108,11 @@ namespace Comox_KML
         public bool compareStyleId(string idName)
         {
             idName = idName.Split(":").Last().Replace(".webp", "");
-            return excStyleList.Contains(idName);
+            foreach (string foo in excStyleList)
+                if (foo.Trim() == idName)
+                    return true;
+            return false;
+            //return excStyleList.Contains(idName);
         }
 
         private async void button1_Click(object sender, EventArgs e)

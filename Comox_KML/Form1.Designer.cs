@@ -193,6 +193,7 @@ namespace Comox_KML
             this.labelFileCount.Size = new System.Drawing.Size(116, 15);
             this.labelFileCount.TabIndex = 11;
             this.labelFileCount.Text = "Всего файлов 50000";
+            this.labelFileCount.Visible = false;
             // 
             // labelDone
             // 
@@ -203,6 +204,7 @@ namespace Comox_KML
             this.labelDone.Size = new System.Drawing.Size(116, 15);
             this.labelDone.TabIndex = 12;
             this.labelDone.Text = "Обработано - 50000";
+            this.labelDone.Visible = false;
             // 
             // labelError
             // 
@@ -213,6 +215,7 @@ namespace Comox_KML
             this.labelError.Size = new System.Drawing.Size(95, 15);
             this.labelError.TabIndex = 13;
             this.labelError.Text = "Ошибок - 50000";
+            this.labelError.Visible = false;
             // 
             // Form1
             // 
@@ -228,7 +231,7 @@ namespace Comox_KML
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Form1-Ver3.1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
