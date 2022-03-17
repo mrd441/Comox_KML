@@ -231,7 +231,7 @@ namespace Comox_KML
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1-Ver3.1";
+            this.Text = "Form1-Ver3.2";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
