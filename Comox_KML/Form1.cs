@@ -109,7 +109,7 @@ namespace Comox_KML
         {
             idName = idName.Split(":").Last().Replace(".webp", "");
             foreach (string foo in excStyleList)
-                if (foo.Trim().IndexOf(idName)==0)
+                if (idName.IndexOf(foo.Trim())==0)
                     return true;
             return false;
             //return excStyleList.Contains(idName);
